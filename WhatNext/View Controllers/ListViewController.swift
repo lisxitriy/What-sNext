@@ -6,13 +6,21 @@
 //
 
 import UIKit
+import CoreData
 
 
 class ListViewController: UIViewController {
     
     @IBOutlet weak var mainTableView: UITableView!
     
-    var lists: [String] = ["dfgdfg", "dfgh"]
+    var lists: [List] = []
+    
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        fetchData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +34,7 @@ class ListViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                self.lists.append(newName)
+                self.saveListName(withTitle: newName)
                 self.mainTableView.reloadData()
             } else {
                 self.emptyAlert()
@@ -56,6 +64,38 @@ class ListViewController: UIViewController {
 }
 
 
+extension ListViewController {
+    
+    func saveListName(withTitle name: String) {
+        //описание сущности
+        guard let entity = NSEntityDescription.entity(forEntityName: "List", in: managedContext) else { return }
+        //экземпляр сущности из Core Data
+        let listObject = List(entity: entity, insertInto: managedContext)
+        listObject.name = name
+        
+        do {
+            try managedContext.save()
+            lists.append(listObject)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func fetchData(){
+        
+        let fetchRequest: NSFetchRequest<List> = List.fetchRequest()
+        
+        do {
+           lists = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+}
+
+
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lists.count
@@ -64,7 +104,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = mainTableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-        cell.textLabel?.text = lists[indexPath.row]
+        cell.textLabel?.text = lists[indexPath.row].name
         return cell
     }
     
@@ -94,6 +134,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             let listToDelete = lists[indexPath.row]
             lists.remove(at: indexPath.row)
+            managedContext.delete(listToDelete)
             mainTableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -106,6 +147,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let movedList = lists.remove(at: sourceIndexPath.row)
         lists.insert(movedList, at: destinationIndexPath.row)
         mainTableView.reloadData()
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
     
     
@@ -116,10 +163,10 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = mainTableView.indexPathForSelectedRow {
-            let list = lists[indexPath.row]
+            let list = lists[indexPath.row].name
             
             let detailVC = segue.destination as? DetailViewController
-            detailVC?.detailNavigationTitle = list
+//            detailVC?.detailNavigationTitle = list
             
             
             
