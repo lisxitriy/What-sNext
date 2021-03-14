@@ -8,7 +8,6 @@
 import UIKit
 import CoreData
 
-
 class ListViewController: UIViewController {
     
     @IBOutlet weak var mainTableView: UITableView!
@@ -34,8 +33,17 @@ class ListViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                self.saveListName(withTitle: newName)
-                self.mainTableView.reloadData()
+                
+                for newName in self.lists {
+                    if self.lists.contains(newName) {
+                        self.sameValue()
+                        print(self.lists)
+                    } else {
+                        self.saveListName(withTitle: "\(newName)")
+                        self.mainTableView.reloadData()
+                    }
+                }
+                
             } else {
                 self.emptyAlert()
             }
@@ -51,9 +59,18 @@ class ListViewController: UIViewController {
         
     }
     
-    //Alert for empty textField case
+    //Предупреждение, если поле ввода пустое
     private func emptyAlert() {
         let alert = UIAlertController(title: "Empty value", message: "Please, enter text", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    //Предупреждение, если такое же имя уже есть в таблице
+    private func sameValue() {
+        let alert = UIAlertController(title: "Same name", message: "Such a name already exists. Please, enter a new name", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alert.addAction(okAction)
@@ -97,6 +114,7 @@ extension ListViewController {
 
 
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lists.count
     }
@@ -156,18 +174,23 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
     }
     
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let someList = lists[indexPath.row]
+        performSegue(withIdentifier: "toDetailList", sender: someList)
     }
     
-
+    //MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let indexPath = mainTableView.indexPathForSelectedRow {
-            let list = lists[indexPath.row].name
+            let list = lists[indexPath.row]
             
             let detailVC = segue.destination as? DetailViewController
-//            detailVC?.detailNavigationTitle = list
+            detailVC?.list = list
+            guard let listName = list.name else { return }
+            detailVC?.detailNavigationTitle = listName
             
             
             

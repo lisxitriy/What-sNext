@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RandomChoiceViewController: UIViewController {
     
@@ -15,6 +16,10 @@ class RandomChoiceViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
     
+    var list: List!
+    var detail: [Detail] = []
+    
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var randomText = "Oh no...Your list is empty"
     
@@ -29,12 +34,13 @@ class RandomChoiceViewController: UIViewController {
     }
 
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        let detail = DetailViewController()
-        let rrrandom = detail.detail.randomElement()
-//        print(rrrandom)
-        guard let newRnd = rrrandom else { return }
-        randomResultLabel.text = newRnd
-//        print(randomText)
+ 
+        guard !detail.isEmpty else { return }
+        fetchDetailData()
+        let randomChoice = detail.randomElement()?.detailName
+        guard let SomeRandomElement = randomChoice else { return }
+        randomResultLabel.text = SomeRandomElement
+        
     }
     
     @IBAction func okButtonTupped(_ sender: UIButton) {
@@ -42,4 +48,19 @@ class RandomChoiceViewController: UIViewController {
     }
 }
 
+extension RandomChoiceViewController {
+    
+    func fetchDetailData() {
+        
+        let predicate = NSPredicate(format: "list.name == %@", list.name!)
+        let fetchRequest = NSFetchRequest<Detail>(entityName: "Detail")
+        fetchRequest.predicate = predicate
+        
+        do {
+            detail = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+}
 

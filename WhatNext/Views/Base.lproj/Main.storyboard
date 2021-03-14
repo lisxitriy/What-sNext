@@ -29,7 +29,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="92l-D7-T5o" kind="show" id="7HN-Ux-Xaf"/>
+                                            <segue destination="92l-D7-T5o" kind="show" identifier="toDetailList" id="7HN-Ux-Xaf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

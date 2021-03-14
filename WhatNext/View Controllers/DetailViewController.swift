@@ -6,25 +6,31 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController {
-    
-    var detail: [String] = []
-
-    
+        
     @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var whatNextButton: UIButton!
     
+    var detail: [Detail] = []
+    var list: List!
+    
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     var detailNavigationTitle = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        fetchDetailData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setNavigationBar(navigationTitle: detailNavigationTitle)
         setView()
-
-        // Do any additional setup after loading the view.
+      
     }
     
     
@@ -36,7 +42,7 @@ class DetailViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                self.detail.append(newName)
+                self.saveDetailName(withTitle: newName)
                 self.detailTableView.reloadData()
             } else {
                 self.emptyAlert()
@@ -75,25 +81,55 @@ class DetailViewController: UIViewController {
     // MARK: - Navigation
     
     @IBAction func whatNextButton(_ sender: UIButton) {
-//        if detail.isEmpty {
-//            emptyListAlert()
-//        }
+
     }
     
-  
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
   
      guard segue.identifier == "toRandomChoice" else {return}
-              let rnd = segue.destination as? RandomChoiceViewController
-              let destination = detail.randomElement()
-              guard let rndDestination = destination else { return }
-                  rnd?.randomText = rndDestination
+        guard let random = segue.destination as? RandomChoiceViewController else { return }
+        let destination = detail.randomElement()?.detailName
+        guard let randomDestination = destination else { return }
+        random.randomText = randomDestination
+        random.list = list
+        random.detail = detail
  
     }
- 
-
 }
+    
+extension DetailViewController {
+    
+    func saveDetailName(withTitle name: String) {
+        guard let entity = NSEntityDescription.entity(forEntityName: "Detail", in: managedContext) else { return }
+        let listObject = Detail(entity: entity, insertInto: managedContext)
+        listObject.detailName = name
+        listObject.list = list
+        
+        do {
+            try managedContext.save()
+            detail.append(listObject)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func fetchDetailData() {
+        
+        let predicate = NSPredicate(format: "list.name == %@", list.name!)
+        let fetchRequest = NSFetchRequest<Detail>(entityName: "Detail")
+        fetchRequest.predicate = predicate
+        
+        do {
+            detail = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+ 
+}
+
 
 extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,7 +138,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = detailTableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
-        cell.textLabel?.text = detail[indexPath.row]
+        cell.textLabel?.text = detail[indexPath.row].detailName
         return cell
     }
     
@@ -118,7 +154,14 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             let listToDelete = detail[indexPath.row]
             detail.remove(at: indexPath.row)
+            managedContext.delete(listToDelete)
             detailTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
     }
 }
