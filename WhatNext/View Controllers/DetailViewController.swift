@@ -42,16 +42,21 @@ class DetailViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                
-                for newName in self.detail {
-                    if self.detail.contains(newName) {
-                        self.sameValue()
-                        print(self.detail)
+               
+                if self.detail.count != 0 {
+                    for newName in self.detail {
+                        if self.detail.contains(newName) {
+                            self.sameValue()
+                            print(self.detail)
+                        } else {
+                            self.saveDetailName(withTitle: "\(newName)")
+                            self.detailTableView.reloadData()
+                        }
+                    }
                     } else {
-                        self.saveDetailName(withTitle: "\(newName)")
+                        self.saveDetailName(withTitle: newName)
                         self.detailTableView.reloadData()
                     }
-                }
             } else {
                 self.emptyAlert()
             }

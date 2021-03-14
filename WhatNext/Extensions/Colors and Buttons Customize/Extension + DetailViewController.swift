@@ -25,7 +25,7 @@ extension DetailViewController {
         detailTableView.layer.cornerRadius = cornerRadius
         whatNextButton.layer.cornerRadius = cornerRadius
         
-        whatNextButton.setTitle("What next?", for: .normal)
+        whatNextButton.setTitle("What's next?", for: .normal)
         whatNextButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         whatNextButton.titleLabel?.tintColor = .yellow
         

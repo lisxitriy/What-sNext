@@ -65,12 +65,20 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let movedList = lists.remove(at: sourceIndexPath.row)
         lists.insert(movedList, at: destinationIndexPath.row)
         mainTableView.reloadData()
+        
+        do {
+            try managedContext.save()
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
     
     }
     
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let someList = lists[indexPath.row]
-        performSegue(withIdentifier: "toDetailList", sender: someList)
+//        let someList = lists[indexPath.row]
+//        performSegue(withIdentifier: "toDetailList", sender: someList)
     }
 }

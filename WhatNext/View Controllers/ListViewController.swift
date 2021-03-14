@@ -34,15 +34,21 @@ class ListViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                
-                for newName in self.lists {
-                    if self.lists.contains(newName) {
-                        self.sameValue()
-                        print(self.lists)
-                    } else {
-                        self.saveListName(withTitle: "\(newName)")
-                        self.mainTableView.reloadData()
+//
+                if self.lists.count != 0 {
+                    for newName in self.lists {
+                        if self.lists.contains(newName) {
+                            self.sameValue()
+                            print(self.lists)
+                        } else {
+                            self.saveListName(withTitle: "\(newName)")
+                            self.mainTableView.reloadData()
+                        }
                     }
+                } else {
+                
+                    self.saveListName(withTitle: newName)
+                    self.mainTableView.reloadData()
                 }
                 
             } else {
@@ -89,9 +95,7 @@ class ListViewController: UIViewController {
             detailVC?.list = list
             guard let listName = list.name else { return }
             detailVC?.detailNavigationTitle = listName
-            
-            
-            
+                        
         }
     }
     
@@ -110,6 +114,7 @@ extension ListViewController {
         do {
             try managedContext.save()
             lists.append(listObject)
+            print(lists)
         } catch let error as NSError {
             print(error.localizedDescription)
         }

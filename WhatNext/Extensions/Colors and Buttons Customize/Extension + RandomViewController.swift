@@ -9,7 +9,7 @@ import UIKit
 
 extension RandomChoiceViewController {
     func setLabelsAndButtons() {
-        mainLabel.text = "What Next?"
+        mainLabel.text = "What's Next?"
         mainLabel.textColor = .white
         mainLabel.font = mainLabel.font.withSize(26)
         

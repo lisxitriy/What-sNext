@@ -25,11 +25,9 @@ class RandomChoiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         setLabelsAndButtons()
         gradient()
-        
         
     }
 
@@ -47,6 +45,8 @@ class RandomChoiceViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
+//MARK: - Core Data
 
 extension RandomChoiceViewController {
     

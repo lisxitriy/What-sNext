@@ -61,7 +61,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="923.1884057971015" y="70.982142857142847"/>
+            <point key="canvasLocation" x="784" y="71"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="fJX-Ra-9LS">
@@ -92,6 +92,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmE-Wg-uCW">
                                 <rect key="frame" x="112" y="771" width="190" height="30"/>
                                 <color key="backgroundColor" red="0.53285247089999999" green="0.14116314050000001" blue="0.31372952459999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="phd-o4-EfS"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="190" id="q8H-uE-4RX"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="whatNextButton:" destination="92l-D7-T5o" eventType="touchUpInside" id="rAr-jc-0Zx"/>
@@ -102,12 +106,11 @@
                         <viewLayoutGuide key="safeArea" id="n1R-Ga-Gxu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="n1R-Ga-Gxu" firstAttribute="trailing" secondItem="WmE-Wg-uCW" secondAttribute="trailing" constant="112" id="Fq5-WN-fSo"/>
                             <constraint firstItem="n1R-Ga-Gxu" firstAttribute="trailing" secondItem="urW-cX-BVf" secondAttribute="trailing" constant="8" id="OL5-Na-h6y"/>
-                            <constraint firstItem="WmE-Wg-uCW" firstAttribute="leading" secondItem="n1R-Ga-Gxu" secondAttribute="leading" constant="112" id="Xan-h0-uI5"/>
                             <constraint firstItem="urW-cX-BVf" firstAttribute="leading" secondItem="n1R-Ga-Gxu" secondAttribute="leading" constant="8" id="ZDT-zW-Iow"/>
                             <constraint firstItem="WmE-Wg-uCW" firstAttribute="top" secondItem="urW-cX-BVf" secondAttribute="bottom" constant="63" id="hwD-Eg-1g6"/>
                             <constraint firstItem="urW-cX-BVf" firstAttribute="top" secondItem="n1R-Ga-Gxu" secondAttribute="top" constant="8" id="k1F-uP-hHt"/>
+                            <constraint firstItem="WmE-Wg-uCW" firstAttribute="centerX" secondItem="urW-cX-BVf" secondAttribute="centerX" id="kit-6Y-9jI"/>
                             <constraint firstItem="n1R-Ga-Gxu" firstAttribute="bottom" secondItem="WmE-Wg-uCW" secondAttribute="bottom" constant="61" id="lGR-KZ-YNv"/>
                         </constraints>
                     </view>
@@ -144,7 +147,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AB-q4-ef7">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AB-q4-ef7">
                                         <rect key="frame" x="62.5" y="115.5" width="41.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
