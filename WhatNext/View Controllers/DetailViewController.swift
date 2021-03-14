@@ -42,8 +42,16 @@ class DetailViewController: UIViewController {
             let textField = alert.textFields?.first
             
             if let newName = textField?.text, !newName.isEmpty, newName != " " {
-                self.saveDetailName(withTitle: newName)
-                self.detailTableView.reloadData()
+                
+                for newName in self.detail {
+                    if self.detail.contains(newName) {
+                        self.sameValue()
+                        print(self.detail)
+                    } else {
+                        self.saveDetailName(withTitle: "\(newName)")
+                        self.detailTableView.reloadData()
+                    }
+                }
             } else {
                 self.emptyAlert()
             }
@@ -59,7 +67,7 @@ class DetailViewController: UIViewController {
         
     }
     
-    //Alert for empty textField case
+    //Предупреждение, если поле пустое
     private func emptyAlert() {
         let alert = UIAlertController(title: "Empty value", message: "Please, enter text", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -68,9 +76,9 @@ class DetailViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    //Alert for empty list case
-    private func emptyListAlert() {
-        let alert = UIAlertController(title: "\(detailNavigationTitle) list is empty", message: "Please, fill in the list", preferredStyle: .alert)
+    //Предупреждение, если такое же имя уже есть в таблице
+    private func sameValue() {
+        let alert = UIAlertController(title: "Same name", message: "Such a name already exists. Please, enter a new name", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alert.addAction(okAction)
@@ -84,7 +92,6 @@ class DetailViewController: UIViewController {
 
     }
     
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
   
      guard segue.identifier == "toRandomChoice" else {return}
@@ -97,6 +104,8 @@ class DetailViewController: UIViewController {
  
     }
 }
+
+//MARK: - Core Data
     
 extension DetailViewController {
     
@@ -131,39 +140,6 @@ extension DetailViewController {
 }
 
 
-extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return detail.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = detailTableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
-        cell.textLabel?.text = detail[indexPath.row].detailName
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let listToDelete = detail[indexPath.row]
-            detail.remove(at: indexPath.row)
-            managedContext.delete(listToDelete)
-            detailTableView.deleteRows(at: [indexPath], with: .fade)
-        }
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    }
-}
+
 
 

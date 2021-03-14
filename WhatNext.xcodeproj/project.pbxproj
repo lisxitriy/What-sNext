@@ -16,6 +16,8 @@
 		D083DC8F25E92FAC0070F079 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D083DC8D25E92FAC0070F079 /* LaunchScreen.storyboard */; };
 		D083DC9B25EBEDFB0070F079 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D083DC9A25EBEDFB0070F079 /* DetailViewController.swift */; };
 		D083DC9F25EBEF0C0070F079 /* RandomChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D083DC9E25EBEF0C0070F079 /* RandomChoiceViewController.swift */; };
+		D0E14C1B25FE804A00A9E6B6 /* ListViewController + TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E14C1A25FE804A00A9E6B6 /* ListViewController + TableViewController.swift */; };
+		D0E14C1E25FE821D00A9E6B6 /* DetailViewController + TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E14C1D25FE821D00A9E6B6 /* DetailViewController + TableViewController.swift */; };
 		D0F10F1A25EC2344000312F8 /* Extension + ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F1925EC2344000312F8 /* Extension + ListViewController.swift */; };
 		D0F10F1D25EC23A3000312F8 /* Extension + DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F1C25EC23A3000312F8 /* Extension + DetailViewController.swift */; };
 		D0F10F2025EC23FB000312F8 /* Extension + RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F1F25EC23FB000312F8 /* Extension + RandomViewController.swift */; };
@@ -33,6 +35,8 @@
 		D083DC9025E92FAC0070F079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D083DC9A25EBEDFB0070F079 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D083DC9E25EBEF0C0070F079 /* RandomChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomChoiceViewController.swift; sourceTree = "<group>"; };
+		D0E14C1A25FE804A00A9E6B6 /* ListViewController + TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController + TableViewController.swift"; sourceTree = "<group>"; };
+		D0E14C1D25FE821D00A9E6B6 /* DetailViewController + TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewController + TableViewController.swift"; sourceTree = "<group>"; };
 		D0F10F1925EC2344000312F8 /* Extension + ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + ListViewController.swift"; sourceTree = "<group>"; };
 		D0F10F1C25EC23A3000312F8 /* Extension + DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + DetailViewController.swift"; sourceTree = "<group>"; };
 		D0F10F1F25EC23FB000312F8 /* Extension + RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + RandomViewController.swift"; sourceTree = "<group>"; };
@@ -111,11 +115,21 @@
 		D09349AA25FC096800214310 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D0E14C1825FE7FF700A9E6B6 /* Colors and Buttons Customize */,
+				D0E14C1A25FE804A00A9E6B6 /* ListViewController + TableViewController.swift */,
+				D0E14C1D25FE821D00A9E6B6 /* DetailViewController + TableViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D0E14C1825FE7FF700A9E6B6 /* Colors and Buttons Customize */ = {
+			isa = PBXGroup;
+			children = (
 				D0F10F1925EC2344000312F8 /* Extension + ListViewController.swift */,
 				D0F10F1C25EC23A3000312F8 /* Extension + DetailViewController.swift */,
 				D0F10F1F25EC23FB000312F8 /* Extension + RandomViewController.swift */,
 			);
-			path = Extensions;
+			path = "Colors and Buttons Customize";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,9 +208,11 @@
 				D083DC8425E92FAA0070F079 /* ListViewController.swift in Sources */,
 				D0F10F1D25EC23A3000312F8 /* Extension + DetailViewController.swift in Sources */,
 				D083DC9B25EBEDFB0070F079 /* DetailViewController.swift in Sources */,
+				D0E14C1B25FE804A00A9E6B6 /* ListViewController + TableViewController.swift in Sources */,
 				D083DC8025E92FAA0070F079 /* AppDelegate.swift in Sources */,
 				D083DC9F25EBEF0C0070F079 /* RandomChoiceViewController.swift in Sources */,
 				D083DC8225E92FAA0070F079 /* SceneDelegate.swift in Sources */,
+				D0E14C1E25FE821D00A9E6B6 /* DetailViewController + TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
