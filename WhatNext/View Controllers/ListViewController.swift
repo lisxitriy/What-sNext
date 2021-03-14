@@ -136,6 +136,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             lists.remove(at: indexPath.row)
             managedContext.delete(listToDelete)
             mainTableView.deleteRows(at: [indexPath], with: .fade)
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -147,12 +153,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let movedList = lists.remove(at: sourceIndexPath.row)
         lists.insert(movedList, at: destinationIndexPath.row)
         mainTableView.reloadData()
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
+    
     }
     
     
